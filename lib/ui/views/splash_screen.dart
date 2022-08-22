@@ -1,15 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:travel_app/const/app_string.dart';
+import 'package:travel_app/ui/route/route.dart';
+import 'package:travel_app/ui/style/style.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text("this is splash screen"),
+    Future.delayed(Duration(seconds: 3),()=> Get.toNamed(onboarding));
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/logo/logo 1.png",
+                height: 300.h,
+              ),
+              Text(
+                AppString.appName,
+                style: AppStyles().myTextStyle,
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
