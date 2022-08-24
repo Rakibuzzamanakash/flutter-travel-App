@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:lottie/lottie.dart';
 import 'package:travel_app/const/app_colors.dart';
+import 'package:travel_app/ui/route/route.dart';
 import 'package:travel_app/ui/style/style.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -77,16 +79,16 @@ class OnboardingScreen extends StatelessWidget {
                                   dotsCount: _lottieFiles.length,
                                   position: _currentIndex.toDouble(),
                                   decorator: DotsDecorator(
-                                    size: Size(10, 10),
-                                    activeSize: Size(13, 13),
+                                      size: Size(10, 10),
+                                      activeSize: Size(13, 13),
                                       color: Colors.grey,
                                       activeColor: Colors.black),
                                 )),
                             InkWell(
                               onTap: () {
                                 if (_currentIndex == _title.length - 1) {
-                                  print("Finshed");
-                                }else{
+                                  Get.toNamed(signup);
+                                } else {
                                   _currentIndex + 1;
                                 }
                               },
@@ -108,9 +110,7 @@ class OnboardingScreen extends StatelessWidget {
                                           blurRadius: 5,
                                           spreadRadius: 1.0),
                                     ]),
-                                    child: Icon(
-                                      Icons.arrow_forward
-                                    ),
+                                child: Icon(Icons.arrow_forward),
                               ),
                             ),
                           ],

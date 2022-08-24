@@ -7,12 +7,21 @@ import 'package:travel_app/const/app_string.dart';
 import 'package:travel_app/ui/route/route.dart';
 import 'package:travel_app/ui/style/style.dart';
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+class SplashScreen extends StatefulWidget {
+  
 
   @override
-  Widget build(BuildContext context) {
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
     Future.delayed(Duration(seconds: 3),()=> Get.toNamed(onboarding));
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Center(
