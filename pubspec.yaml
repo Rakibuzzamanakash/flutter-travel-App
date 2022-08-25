@@ -39,6 +39,7 @@ dependencies:
   get: ^4.6.5
   lottie: ^1.4.1
   dots_indicator: ^2.1.0
+  toggle_switch: ^2.0.1
 
 dev_dependencies:
   flutter_test:
