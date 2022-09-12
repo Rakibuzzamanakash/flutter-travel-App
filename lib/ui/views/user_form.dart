@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:travel_app/business_logics/form.dart';
 import 'package:travel_app/ui/route/route.dart';
-import 'package:travel_app/ui/views/privacy_policy.dart';
 import 'package:travel_app/ui/widgets/custom_form_field.dart';
 import 'package:travel_app/ui/widgets/violetButton.dart';
 
 import '../../const/app_colors.dart';
-import '../style/style.dart';
+
 
 class UserForm extends StatelessWidget {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
   Rx<TextEditingController> _dobController = TextEditingController().obs;
+  String? dob;
+  String gender = 'Male';
   Rx<DateTime> selectedDate = DateTime.now().obs;
 
   _selectDate(BuildContext context) async {
@@ -27,8 +28,9 @@ class UserForm extends StatelessWidget {
         lastDate: DateTime(2025));
 
     if (selected != null && selected != selectedDate) {
-      _dobController.value.text =
+     dob =
           "${selected.day} - ${selected.month} - ${selected.year}";
+    _dobController.value.text = dob!;
     }
   }
 
@@ -94,6 +96,11 @@ class UserForm extends StatelessWidget {
                     'Female',
                   ],
                   onToggle: (index) {
+                    if(index == 0){
+                      gender = 'Male';
+                    }else{
+                      gender = 'Female';
+                    }
                     print('switched to: $index');
                   },
                 ),
@@ -101,7 +108,12 @@ class UserForm extends StatelessWidget {
                   height: 20.h,
                 ),
 
-                VioletButton("Submit", ()=>Get.toNamed(privacypolicy))
+                VioletButton("Submit", ()=>UserInfo().sendFormDataToDB(
+                    _nameController.text,
+                   int.parse( _phoneController.text),
+                    _addressController.text,
+                    dob!,
+                    gender))
               ],
             ),
           ),

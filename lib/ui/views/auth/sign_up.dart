@@ -4,6 +4,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:travel_app/business_logics/auth.dart';
 import 'package:travel_app/const/app_colors.dart';
 import 'package:travel_app/ui/route/route.dart';
 import 'package:travel_app/ui/style/style.dart';
@@ -58,7 +59,8 @@ class SignUp extends StatelessWidget {
                 SizedBox(
                   height: 40.h,
                 ),
-                VioletButton("Create Account",()=>Get.toNamed(userform)),
+                VioletButton("Create Account",()=>Auth().
+                registration(_emailController.text, _passwordController.text, context)),
                 SizedBox(
                   height: 10.h,
                 ),
