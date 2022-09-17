@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -9,31 +11,39 @@ import 'package:travel_app/ui/route/route.dart';
 import 'package:travel_app/ui/style/style.dart';
 
 class SplashScreen extends StatefulWidget {
-  
-
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   final box = GetStorage();
 
-  Future chooseScreen() async{
+
+  Future chooseScreen() async {
+
     var userId = box.read('uid');
+    var formInfo = box.read('formdata');
+    var privacyInfo = box.read('privacy');
+
     print(userId);
-    if(userId == null){
+    if (userId == null) {
       Get.toNamed(onboarding);
-    }else{
+    }else if(formInfo == null) {
+      Get.toNamed(userform);
+    }else if(privacyInfo == null){
+      Get.toNamed(privacypolicy);
+    }
+    else{
       Get.toNamed(homePage);
     }
   }
 
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 3),()=> chooseScreen());
+    Future.delayed(Duration(seconds: 3), () => chooseScreen());
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

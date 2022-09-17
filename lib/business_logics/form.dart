@@ -2,10 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:travel_app/ui/route/route.dart';
 
 class UserInfo{
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final box = GetStorage();
 
   sendFormDataToDB(
       String name,
@@ -25,6 +27,7 @@ class UserInfo{
       }).whenComplete(
               () {
                 Fluttertoast.showToast(msg: 'Added Successfully');
+                box.write('formdata', 'submited');
                 Get.toNamed(privacypolicy);
               }
       );
