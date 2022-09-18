@@ -18,6 +18,7 @@ class UserForm extends StatelessWidget {
   Rx<TextEditingController> _dobController = TextEditingController().obs;
   String? dob;
   String gender = 'Male';
+
   Rx<DateTime> selectedDate = DateTime.now().obs;
 
   _selectDate(BuildContext context) async {

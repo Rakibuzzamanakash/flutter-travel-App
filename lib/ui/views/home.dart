@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:travel_app/ui/views/bottom_nav_controller.dart';
+import 'package:travel_app/ui/views/drawer_screen.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -8,18 +10,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Text("home page"),
-            ElevatedButton(
-                onPressed: () {
-                  print('hjjk');
-                  //check();
-                },
-                child: Text("tap"))
-          ],
-        ),
+      body: Stack(
+        children: [
+          DrawerScreen(),
+          BottomNavController(),
+        ],
       ),
     );
   }
