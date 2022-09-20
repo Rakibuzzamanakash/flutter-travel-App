@@ -28,6 +28,7 @@ class BottomNavController extends StatelessWidget {
           child: Container(
             child: Scaffold(
               appBar: AppBar(
+                elevation: 0,
                 backgroundColor: Colors.white,
                 leading: _drawer.value == false
                     ? IconButton(

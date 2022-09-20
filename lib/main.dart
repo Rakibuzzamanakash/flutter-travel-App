@@ -63,6 +63,15 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: AppString.appName,
           theme: ThemeData(
+              appBarTheme: AppBarTheme(
+                backgroundColor: Colors.white,
+                centerTitle: true,
+                elevation: 0,
+                titleTextStyle: TextStyle(color: Colors.black),
+                iconTheme: IconThemeData(
+                  color: Colors.black,
+                ),
+              ),
               primarySwatch: Colors.blue,
               scaffoldBackgroundColor: AppColors.scaffoldColor,
               textTheme: GoogleFonts.poppinsTextTheme(
