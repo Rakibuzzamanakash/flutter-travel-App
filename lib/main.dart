@@ -6,9 +6,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_app/const/app_colors.dart';
 import 'package:travel_app/const/app_string.dart';
+import 'package:travel_app/theme/app_theme.dart';
 import 'package:travel_app/ui/route/route.dart';
 import 'package:travel_app/ui/views/splash_screen.dart';
 
+final _themedata = GetStorage();
 void main(List<String> args) async{
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
@@ -52,8 +54,8 @@ class App extends StatelessWidget {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
 
+final bool _darkMode = _themedata.read('darkmode') ?? false;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -62,22 +64,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: AppString.appName,
-          theme: ThemeData(
-              appBarTheme: AppBarTheme(
-                backgroundColor: Colors.white,
-                centerTitle: true,
-                elevation: 0,
-                titleTextStyle: TextStyle(color: Colors.black),
-                iconTheme: IconThemeData(
-                  color: Colors.black,
-                ),
-              ),
-              primarySwatch: Colors.blue,
-              scaffoldBackgroundColor: AppColors.scaffoldColor,
-              textTheme: GoogleFonts.poppinsTextTheme(
-                  Theme.of(context).textTheme.apply()
-              )
-          ),
+          theme: _darkMode? AppTheme().darkTheme():AppTheme().lightTheme(),
           initialRoute: splash,
           getPages: getPages,
           home: SplashScreen(),

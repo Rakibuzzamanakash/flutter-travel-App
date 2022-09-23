@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:travel_app/theme/app_theme.dart';
 import 'package:travel_app/ui/route/route.dart';
 import 'package:travel_app/ui/widgets/setting_drawer_item.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
 
-  RxBool darkMode = false.obs;
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  // RxBool darkMode = false.obs;
+
+  final _themeData = GetStorage();
+
+  bool _isdarkMode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _themeData.writeIfNull('darkmode', false);
+    _isdarkMode = _themeData.read('darkmode');
+
+  }
 
   Future logOut(context) async{
     return showDialog(
@@ -77,11 +96,27 @@ class SettingsScreen extends StatelessWidget {
                   fontSize: 20.w,
                   fontWeight: FontWeight.w400
                 ),),
-                Obx(() => Switch(
-                    value: darkMode.value,
-                    onChanged: (bool value)
-                  => darkMode.value = value,
-                )),
+                Switch(
+                    value: _isdarkMode,
+                    onChanged: (value){
+                      setState(() {
+                        _isdarkMode = value;
+                      });
+                      _isdarkMode?Get.changeTheme(AppTheme().darkTheme())
+                          :Get.changeTheme(AppTheme().lightTheme());
+
+                      _themeData.write('darkmode', value);
+
+                      // darkMode.value = value;
+                      // Get.changeTheme(
+                      //     darkMode.value == false
+                      //         ?AppTheme().lightTheme(context)
+                      //         :AppTheme().darkTheme(context)
+                      // );
+                      // box.write("themeMode", darkMode.value);
+                    }
+
+                ),
               ],
             ),
 

@@ -18,7 +18,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   final box = GetStorage();
 
-
   Future chooseScreen() async {
 
     var userId = box.read('uid');
