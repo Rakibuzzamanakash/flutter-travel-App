@@ -58,18 +58,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
         builder: (context)=> AlertDialog(
           title: Text("Select your language!"),
           content: Container(
-            height: 200.h,
+            height: 150.h,
             child: Column(
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: (){
+                    Get.updateLocale(
+                      const Locale('bn','BD'),
+                    );
+                    Get.back();
+                  },
                   child: Text("Bangla"),
                 ),
                 SizedBox(
                   width: 10.w,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.updateLocale(
+                        const Locale('en', 'US')
+                    );
+                    Get.back();
+                  },
                   child: Text("English"),
                 ),
               ],
@@ -93,7 +103,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Dark Mode',style: TextStyle(
+                Text('darkMode'.tr,style: TextStyle(
                   fontSize: 20.w,
                   fontWeight: FontWeight.w400
                 ),),
@@ -121,11 +131,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
 
-            settingDrawerItem('Logout', ()=> Auth().logOut(context)),
+            settingDrawerItem('logout'.tr, ()=> Auth().logOut(context)),
 
-            settingDrawerItem('Profile', ()=> Get.toNamed(userProfile)),
+            settingDrawerItem('Profile'.tr, ()=> Get.toNamed(userProfile)),
 
-            settingDrawerItem('Languages', (){}),
+            settingDrawerItem('languages'.tr, ()=> changeLanguge(context)),
 
           ],
         ),

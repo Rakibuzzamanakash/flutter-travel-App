@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:travel_app/const/app_colors.dart';
+import 'package:travel_app/business_logics/app_languages.dart';
 import 'package:travel_app/const/app_string.dart';
 import 'package:travel_app/theme/app_theme.dart';
 import 'package:travel_app/ui/route/route.dart';
@@ -64,6 +63,9 @@ final bool _darkMode = _themedata.read('darkmode') ?? false;
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: AppString.appName,
+          translations: AppLanguages(),
+          locale: Locale('en','US'),
+          fallbackLocale: Locale('en','US'),
           theme: _darkMode? AppTheme().darkTheme():AppTheme().lightTheme(),
           initialRoute: splash,
           getPages: getPages,
