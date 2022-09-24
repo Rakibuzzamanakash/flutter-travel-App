@@ -54,6 +54,8 @@ class App extends StatelessWidget {
 
 class MyApp extends StatelessWidget {
 
+  final choseLanguage = _themedata.read('language');
+  final choseCountry = _themedata.read('country');
 final bool _darkMode = _themedata.read('darkmode') ?? false;
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,7 @@ final bool _darkMode = _themedata.read('darkmode') ?? false;
           debugShowCheckedModeBanner: false,
           title: AppString.appName,
           translations: AppLanguages(),
-          locale: Locale('en','US'),
+          locale: choseLanguage == null? Locale('en','US'):Locale(choseLanguage,choseCountry),
           fallbackLocale: Locale('en','US'),
           theme: _darkMode? AppTheme().darkTheme():AppTheme().lightTheme(),
           initialRoute: splash,

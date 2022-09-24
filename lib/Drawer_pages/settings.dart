@@ -66,6 +66,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Get.updateLocale(
                       const Locale('bn','BD'),
                     );
+                    _themeData.write('language', 'bn');
+                    _themeData.write('country', 'BD');
                     Get.back();
                   },
                   child: Text("Bangla"),
@@ -78,6 +80,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Get.updateLocale(
                         const Locale('en', 'US')
                     );
+                    _themeData.write('language', 'en');
+                    _themeData.write('country', 'US');
                     Get.back();
                   },
                   child: Text("English"),
