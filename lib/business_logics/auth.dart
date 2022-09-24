@@ -44,6 +44,8 @@ class Auth{
       if(authCredential!.uid.isNotEmpty){
         Fluttertoast.showToast(msg: "Login Successfull");
         box.write('uid', authCredential.uid);
+        box.write('formdata', 'submited');
+        box.write('privacy', 'agree');
         Get.toNamed(homePage);
       }else{
         print("sign up failed");
@@ -75,7 +77,9 @@ class Auth{
                     ));
 
                     await box.remove("uid");
-                    Get.toNamed(splash);
+                    await box.remove("formdata");
+                    await box.remove("privacy");
+                    Get.toNamed(signup);
                   },
                   child: const Text("yes"),
               ),

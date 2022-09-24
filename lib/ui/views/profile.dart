@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -30,6 +33,109 @@ class UserProfile extends StatelessWidget {
      _dobController.value.text = dob!;
    }
  }
+ 
+ update(data) async{
+   try{
+     CollectionReference registerData = FirebaseFirestore.instance.
+     collection('users-form-data');
+     final user = FirebaseAuth.instance.currentUser!.email;
+     
+     registerData.doc(user).update(
+       {
+         'name':_nameController.text,
+         'phone': _phoneController.text,
+         'address': _addressController.text,
+         'dob' : _dobController.value.text,
+         'gender' : gender,
+       }
+     ).then((value) => Fluttertoast.showToast(
+         msg: 'Profile Updated Successfully'
+     )).then((value) => Get.back());
+   }catch(e){
+     Fluttertoast.showToast(
+         msg: 'Something is wrong'
+     );
+   }
+ }
+
+
+ setUserData(data,context){
+   _nameController.text = data['name'];
+   _phoneController.text = data['phone'].toString();
+   _addressController.text = data['address'];
+   _dobController.value.text = data['dob'];
+   gender =data['gender'];
+
+   return Padding(
+     padding:  EdgeInsets.only(left: 30.w,right: 30.w,top: 20.h),
+     child: SingleChildScrollView(
+       scrollDirection: Axis.vertical,
+       child: Column(
+         crossAxisAlignment: CrossAxisAlignment.start,
+         children: [
+           FormField(
+               _nameController,
+               TextInputType.name,
+               'name'
+           ),
+
+           FormField(
+               _phoneController,
+               TextInputType.number,
+               'number'
+           ),
+
+           FormField(
+               _addressController,
+               TextInputType.text,
+               'address'
+           ),
+
+           Obx(() => TextFormField(
+             controller: _dobController.value,
+             readOnly: true,
+             decoration: InputDecoration(
+               hintText: 'date of birth',
+               hintStyle: TextStyle(
+                 fontSize: 15.sp,
+               ),
+               suffixIcon: IconButton(
+                   onPressed: ()=> _selectDate(context),
+                   icon: Icon(Icons.calendar_month_rounded)),
+             ),
+           )),
+           SizedBox(
+             height: 10.h,
+           ),
+           ToggleSwitch(
+             initialLabelIndex: 0,
+             totalSwitches: 2,
+             labels: [
+               'Male',
+               'Female',
+             ],
+             onToggle: (index) {
+               if (index == 0) {
+                 gender = "Male";
+               } else {
+                 gender = "Female";
+               }
+               print('switched to: $index');
+             },
+           ),
+
+           SizedBox(
+             height: 20.h,
+           ),
+           VioletButton(
+             "Update",
+                 () => update(data),
+           ),
+         ],
+       ),
+     ),
+   );
+ }
 
   @override
   Widget build(BuildContext context) {
@@ -37,78 +143,32 @@ class UserProfile extends StatelessWidget {
       appBar: AppBar(
         title: Text('Profile'),
       ),
-      body: Padding(
-        padding:  EdgeInsets.only(left: 30.w,right: 30.w,top: 20.h),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-             FormField(
-               _nameController,
-               TextInputType.name,
-               'name'
-             ),
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('users-form-data')
+              .doc(FirebaseAuth.instance.currentUser!.email).snapshots(),
+          builder: (context, snapshot){
+              var data = snapshot.data;
 
-              FormField(
-                  _phoneController,
-                  TextInputType.number,
-                  'number'
-              ),
+              if(!snapshot.hasData){
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }else if(snapshot.hasError){
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }else{
+                return setUserData(data, context);
+              }
 
-              FormField(
-                  _nameController,
-                  TextInputType.text,
-                  'address'
-              ),
-              
-              Obx(() => TextFormField(
-                controller: _dobController.value,
-                readOnly: true,
-                decoration: InputDecoration(
-                  hintText: 'date of birth',
-                  hintStyle: TextStyle(
-                    fontSize: 15.sp,
-                  ),
-                  suffixIcon: IconButton(
-                      onPressed: ()=> _selectDate(context),
-                      icon: Icon(Icons.calendar_month_rounded)),
-                ),
-              )),
-              SizedBox(
-                height: 10.h,
-              ),
-              ToggleSwitch(
-                initialLabelIndex: 0,
-                totalSwitches: 2,
-                labels: [
-                  'Male',
-                  'Female',
-                ],
-                onToggle: (index) {
-                  if (index == 0) {
-                    gender = "Male";
-                  } else {
-                    gender = "Female";
-                  }
-                  print('switched to: $index');
-                },
-              ),
-
-              SizedBox(
-                height: 20.h,
-              ),
-              VioletButton(
-                "Update",
-                    () {},
-              ),
-            ],
-          ),
-        ),
+          }
       ),
     );
   }
 }
+
+
+
 
 Widget FormField(controller, inputType, hint) {
   return TextFormField(
