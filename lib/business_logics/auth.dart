@@ -1,5 +1,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -42,6 +43,7 @@ class Auth{
       print(authCredential);
       if(authCredential!.uid.isNotEmpty){
         Fluttertoast.showToast(msg: "Login Successfull");
+        box.write('uid', authCredential.uid);
         Get.toNamed(homePage);
       }else{
         print("sign up failed");
@@ -55,5 +57,36 @@ class Auth{
     }catch (e){
       Fluttertoast.showToast(msg: "Error is : $e");
     }
+  }
+
+  Future logOut(context) async{
+    return showDialog(
+        context: context,
+        builder: (context)=> AlertDialog(
+          title: const Text("Are you sure to logout ?"),
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButton(
+                  onPressed: () async{
+                    await FirebaseAuth.instance.signOut().
+                    then((value) => Fluttertoast.showToast(
+                        msg: 'LogOut Successfull',
+                    ));
+
+                    await box.remove("uid");
+                    Get.toNamed(splash);
+                  },
+                  child: const Text("yes"),
+              ),
+
+              ElevatedButton(
+                  onPressed: ()=>Get.back(),
+                  child: const Text('No'),
+              ),
+            ],
+          ),
+        )
+    );
   }
 }

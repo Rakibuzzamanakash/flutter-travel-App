@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:travel_app/business_logics/auth.dart';
 import 'package:travel_app/theme/app_theme.dart';
 import 'package:travel_app/ui/route/route.dart';
 import 'package:travel_app/ui/widgets/setting_drawer_item.dart';
@@ -27,29 +28,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   }
 
-  Future logOut(context) async{
-    return showDialog(
-        context: context,
-        builder: (context)=> AlertDialog(
-          title: Text("Are you sure to logOut ?"),
-          content: Row(
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: Text("Yes"),
-              ),
-              SizedBox(
-                width: 10.w,
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text("No"),
-              ),
-            ],
-          ),
-        )
-    );
-  }
+  // Future logOut(context) async{
+  //   return showDialog(
+  //       context: context,
+  //       builder: (context)=> AlertDialog(
+  //         title: Text("Are you sure to logOut ?"),
+  //         content: Row(
+  //           children: [
+  //             ElevatedButton(
+  //               onPressed: () {},
+  //               child: Text("Yes"),
+  //             ),
+  //             SizedBox(
+  //               width: 10.w,
+  //             ),
+  //             ElevatedButton(
+  //               onPressed: () {},
+  //               child: Text("No"),
+  //             ),
+  //           ],
+  //         ),
+  //       )
+  //   );
+  // }
 
   Future changeLanguge(context) async{
     return showDialog(
@@ -120,11 +121,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
 
-            settingDrawerItem('Logout', ()=> logOut(context)),
+            settingDrawerItem('Logout', ()=> Auth().logOut(context)),
 
             settingDrawerItem('Profile', ()=> Get.toNamed(userProfile)),
 
-            settingDrawerItem('Languages', ()=> logOut(context)),
+            settingDrawerItem('Languages', (){}),
 
           ],
         ),
