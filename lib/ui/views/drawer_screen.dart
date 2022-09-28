@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:travel_app/const/app_string.dart';
 import 'package:travel_app/ui/route/route.dart';
 
@@ -28,15 +29,25 @@ class DrawerScreen extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            DrawerItem('Support', ()=>Get.toNamed(supportScreen)),
-            DrawerItem('privacy', () =>Get.toNamed(privacyScreen)),
-            DrawerItem('FAQ', ()=>Get.toNamed(faqScreen)),
-            DrawerItem('Rate US', () {}),
-            DrawerItem('How to use', () =>Get.toNamed(howtouseScreen)),
+            DrawerItem('Support', () => Get.toNamed(supportScreen)),
+            DrawerItem('privacy', () => Get.toNamed(privacyScreen)),
+            DrawerItem('FAQ', () => Get.toNamed(faqScreen)),
+            DrawerItem(
+                'Rate US',
+                () => LaunchReview.launch(
+                      androidAppId: "com.example.travel_app",
+                      iOSAppId: "585027354",
+                      writeReview: false,
+                      isiOSBeta: true,
+                    )),
+            DrawerItem('How to use', () => Get.toNamed(howtouseScreen)),
             Expanded(child: SizedBox()),
             InkWell(
-              onTap: ()=>Get.toNamed(settingsScreen),
-              child: Text('Settings',style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w600),),
+              onTap: () => Get.toNamed(settingsScreen),
+              child: Text(
+                'Settings',
+                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
+              ),
             ),
           ],
         ),
