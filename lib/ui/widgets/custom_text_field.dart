@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-Widget CustomTextField(title,{maxline}){
+Widget CustomTextField(title,controller,{maxline}){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -17,6 +17,7 @@ Widget CustomTextField(title,{maxline}){
         ),
         child: TextField(
           maxLines: maxline,
+          controller: controller,
           decoration: InputDecoration(
             border: InputBorder.none,
             contentPadding: EdgeInsets.only(left: 20.w)

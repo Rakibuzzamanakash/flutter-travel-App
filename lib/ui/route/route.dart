@@ -7,6 +7,7 @@ import 'package:travel_app/pages/nav_add_last_step.dart';
 import 'package:travel_app/pages/search_screen.dart';
 import 'package:travel_app/ui/views/auth/sign_in.dart';
 import 'package:travel_app/ui/views/auth/sign_up.dart';
+import 'package:travel_app/ui/views/bottom_nav_controller.dart';
 import 'package:travel_app/ui/views/details_screen.dart';
 import 'package:travel_app/ui/views/home.dart';
 import 'package:travel_app/ui/views/onboarding_screen.dart';
@@ -35,6 +36,7 @@ const String seeAllScreen = "/seeAll-screen";
 const String detailsScreen = "/details-screen";
 const String navAddLastStep = "/navAddLastStep-screen";
 const String userProfile = "/userProfile-screen";
+const String bottomNavScreen = "/bottomNavScreen-screen";
 
 //control our page routes
 
@@ -69,7 +71,12 @@ List<GetPage> getPages = [
 
   GetPage(name: detailsScreen, page: () => DetailsScreen()),
 
-  GetPage(name: navAddLastStep, page: () => NavAddLastStep()),
+  GetPage(name: navAddLastStep, page: () {
+    NavAddLastStep _addLastStep = Get.arguments;
+    return _addLastStep;
+  }),
 
   GetPage(name: userProfile, page: () => UserProfile()),
+
+  GetPage(name: bottomNavScreen, page: () => BottomNavController()),
 ];
